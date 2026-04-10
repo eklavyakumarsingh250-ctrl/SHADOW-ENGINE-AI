@@ -1,3 +1,21 @@
+const { exec } = require('child_process');
+const { pipeline } = require('@xenova/transformers');
+
+/**
+ * SHADOW-WARDEN: Command Execution Bridge
+ * Allows the AI to interact with local security tools.
+ */
+function executeTool(command) {
+    return new Promise((resolve, reject) => {
+        // This is the 'Virtual Space' where the tool runs
+        exec(command, (error, stdout, stderr) => {
+            if (error) reject(`Error: ${error.message}`);
+            if (stderr) resolve(stderr);
+            resolve(stdout);
+        });
+    });
+}
+
 const { pipeline } = require('@xenova/transformers');
 
 /**
